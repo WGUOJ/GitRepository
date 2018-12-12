@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo 
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+<!-- 设置应用名 -->
+<dubbo:application name="consumers"/>
+
+<!-- 设置注册中心地址 -->
+<dubbo:registry timeout="90000" address="zookeeper://192.168.138.136:2181"/>
+
+<!-- 得到远程服务代理对象,可以使用本地bean一样使用cartService 
+	Check=false,消费者启动时不检查有没有提供者
+-->
+<dubbo:reference timeout="900000" check="false"
+ interface="com.jt.cart.service.CartService" id="cartService"/>
+<dubbo:reference timeout="900000" interface="com.jt.order.service.OrderService" id="orderService"/>	
+<dubbo:reference interface="com.jt.search.service.SearchService" id="searchService" check="false" timeout="50000"/>
+</beans>
